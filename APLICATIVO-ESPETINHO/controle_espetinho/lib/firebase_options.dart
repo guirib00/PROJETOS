@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '808772992303',
     projectId: 'controleespetinho',
     authDomain: 'controleespetinho.firebaseapp.com',
+    databaseURL: 'https://controleespetinho-default-rtdb.firebaseio.com',
     storageBucket: 'controleespetinho.appspot.com',
     measurementId: 'G-SLLD3WS67M',
   );
@@ -55,6 +56,7 @@ class DefaultFirebaseOptions {
     appId: '1:808772992303:android:1c28c242723745c89e35da',
     messagingSenderId: '808772992303',
     projectId: 'controleespetinho',
+    databaseURL: 'https://controleespetinho-default-rtdb.firebaseio.com',
     storageBucket: 'controleespetinho.appspot.com',
   );
 
@@ -63,6 +65,7 @@ class DefaultFirebaseOptions {
     appId: '1:808772992303:ios:4744ecf3bf7d650a9e35da',
     messagingSenderId: '808772992303',
     projectId: 'controleespetinho',
+    databaseURL: 'https://controleespetinho-default-rtdb.firebaseio.com',
     storageBucket: 'controleespetinho.appspot.com',
     iosBundleId: 'com.example.controleEspetinho',
   );
@@ -72,6 +75,7 @@ class DefaultFirebaseOptions {
     appId: '1:808772992303:ios:4744ecf3bf7d650a9e35da',
     messagingSenderId: '808772992303',
     projectId: 'controleespetinho',
+    databaseURL: 'https://controleespetinho-default-rtdb.firebaseio.com',
     storageBucket: 'controleespetinho.appspot.com',
     iosBundleId: 'com.example.controleEspetinho',
   );
@@ -82,7 +86,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '808772992303',
     projectId: 'controleespetinho',
     authDomain: 'controleespetinho.firebaseapp.com',
+    databaseURL: 'https://controleespetinho-default-rtdb.firebaseio.com',
     storageBucket: 'controleespetinho.appspot.com',
     measurementId: 'G-0R085DKEER',
   );
+
 }

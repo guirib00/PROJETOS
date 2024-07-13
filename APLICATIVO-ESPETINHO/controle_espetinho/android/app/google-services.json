@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "808772992303",
+    "project_id": "controleespetinho",
+    "storage_bucket": "controleespetinho.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808772992303:android:1c28c242723745c89e35da",
+        "android_client_info": {
+          "package_name": "com.example.controle_espetinho"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkVZcg5xWN0yG5yZHqyHxWUxWgYdQRK60"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

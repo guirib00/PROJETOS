@@ -19,6 +19,15 @@ class MyApp extends StatelessWidget {
       title: 'Controle de Espetaria',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.grey[900], 
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey[900], 
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Color.fromARGB(255, 187, 187, 187), 
+        ),
+        iconTheme: IconThemeData(color: Colors.white), 
       ),
       home: HomePage(),
     );
@@ -35,23 +44,46 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Controle de Espetaria',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.black,
       ),
       drawer: Drawer(
         child: Container(
-          color: Colors.black, 
+          color: Colors.grey[900], 
           child: ListView(
+            padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                child: Text(
-                  'Menu',
-                  style: TextStyle(color: Colors.white),
-                ),
                 decoration: BoxDecoration(
-                    color: Colors.black), 
+                  color: Colors.grey[900], 
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white, 
+                         image: DecorationImage(
+                           image: AssetImage('images/logo.png'),
+                           fit: BoxFit.cover,
+                         ),
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    Text(
+                      "RR's Grill",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               ListTile(
                 title: Text(
@@ -77,7 +109,7 @@ class HomePage extends StatelessWidget {
           }
 
           if (!snapshot.hasData || snapshot.data?.snapshot.value == null) {
-            return Center(child: Text('Nenhum registro encontrado.'));
+            return Center(child: Text('Nenhum registro encontrado.', style: TextStyle(color: Colors.white)));
           }
 
           Map<dynamic, dynamic> registros = snapshot.data!.snapshot.value;
@@ -91,20 +123,29 @@ class HomePage extends StatelessWidget {
             itemCount: registrosList.length,
             itemBuilder: (context, index) {
               final registro = registrosList[index];
-              return ListTile(
-                title: Text('Data: ${registro.data}'),
-                subtitle: Text(
-                    'Total Arrecadado: R\$ ${registro.totalArrecadado.toStringAsFixed(2)}'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetalhesRegistroPage(
-                          registro: registro,
-                          precos: precos), 
-                    ),
-                  );
-                },
+              return Card(
+                elevation: 8, 
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8), 
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), 
+                ),
+                color: Colors.grey[800], 
+                child: ListTile(
+                  title: Text('Data: ${registro.data}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  subtitle: Text(
+                      'Total Arrecadado: R\$ ${registro.totalArrecadado.toStringAsFixed(2)}',
+                      style: TextStyle(color: Colors.white)),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetalhesRegistroPage(
+                            registro: registro,
+                            precos: precos),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           );

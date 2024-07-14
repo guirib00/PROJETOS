@@ -138,112 +138,102 @@ class _EditRegistroPageState extends State<EditRegistroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar Registro'),
+        title: Text('Editar Registro', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.grey[900],
       ),
+      backgroundColor: Colors.grey[900], // Define a cor de fundo escura
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              TextField(
-                controller: _dataController,
-                decoration: InputDecoration(labelText: 'Data (YYYY-MM-DD)'),
-              ),
-              TextField(
-                controller: _levadosCarneController,
-                decoration: InputDecoration(labelText: 'Espetos de Carne Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _levadosLinguicaController,
-                decoration: InputDecoration(labelText: 'Espetos de Linguiça Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _levadosLinguicaApimentadaController,
-                decoration: InputDecoration(labelText: 'Espetos de Linguiça Apimentada Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _levadosFrangoController,
-                decoration: InputDecoration(labelText: 'Espetos de Frango Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _levadosPernilController,
-                decoration: InputDecoration(labelText: 'Espetos de Pernil Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _levadosCoracaoController,
-                decoration: InputDecoration(labelText: 'Espetos de Coração Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _levadosQueijoController,
-                decoration: InputDecoration(labelText: 'Espetos de Queijo Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _levadosPaoController,
-                decoration: InputDecoration(labelText: 'Espetos de Pão Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _sobrouCarneController,
-                decoration: InputDecoration(labelText: 'Espetos de Carne Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _sobrouLinguicaController,
-                decoration: InputDecoration(labelText: 'Espetos de Linguiça Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _sobrouLinguicaApimentadaController,
-                decoration: InputDecoration(labelText: 'Espetos de Linguiça Apimentada Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _sobrouFrangoController,
-                decoration: InputDecoration(labelText: 'Espetos de Frango Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _sobrouPernilController,
-                decoration: InputDecoration(labelText: 'Espetos de Pernil Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _sobrouCoracaoController,
-                decoration: InputDecoration(labelText: 'Espetos de Coração Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _sobrouQueijoController,
-                decoration: InputDecoration(labelText: 'Espetos de Queijo Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _sobrouPaoController,
-                decoration: InputDecoration(labelText: 'Espetos de Pão Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _totalArrecadadoController,
-                decoration: InputDecoration(labelText: 'Total Arrecadado'),
-                keyboardType: TextInputType.number,
-                enabled: false, 
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _atualizarRegistro,
-                child: Text('Salvar'),
+              Card(
+                elevation: 4,
+                color: Colors.grey[800], // Cor do card mais escura
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _dataController,
+                        decoration: InputDecoration(
+                          labelText: 'Data (YYYY-MM-DD)',
+                          labelStyle: TextStyle(color: Colors.white), // Cor do texto do rótulo
+                          border: OutlineInputBorder(),
+                        ),
+                        style: TextStyle(color: Colors.white), // Cor do texto digitado
+                      ),
+                      SizedBox(height: 10),
+                      _buildTextField(_levadosCarneController, 'Espetos de Carne Levados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_levadosLinguicaController, 'Espetos de Linguiça Levados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_levadosLinguicaApimentadaController, 'Espetos de Linguiça Apimentada Levados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_levadosFrangoController, 'Espetos de Frango Levados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_levadosPernilController, 'Espetos de Pernil Levados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_levadosCoracaoController, 'Espetos de Coração Levados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_levadosQueijoController, 'Espetos de Queijo Levados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_levadosPaoController, 'Espetos de Pão Levados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_sobrouCarneController, 'Espetos de Carne Sobrados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_sobrouLinguicaController, 'Espetos de Linguiça Sobrados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_sobrouLinguicaApimentadaController, 'Espetos de Linguiça Apimentada Sobrados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_sobrouFrangoController, 'Espetos de Frango Sobrados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_sobrouPernilController, 'Espetos de Pernil Sobrados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_sobrouCoracaoController, 'Espetos de Coração Sobrados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_sobrouQueijoController, 'Espetos de Queijo Sobrados'),
+                      SizedBox(height: 10),
+                      _buildTextField(_sobrouPaoController, 'Espetos de Pão Sobrados'),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _totalArrecadadoController,
+                        decoration: InputDecoration(
+                          labelText: 'Total Arrecadado',
+                          labelStyle: TextStyle(color: Colors.white),
+                          border: OutlineInputBorder(),
+                        ),
+                        style: TextStyle(color: Colors.white),
+                        keyboardType: TextInputType.number,
+                        enabled: false,
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: _atualizarRegistro,
+                        
+                        child: Text('Salvar'),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String label) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.white),
+        border: OutlineInputBorder(),
+      ),
+      style: TextStyle(color: Colors.white),
+      keyboardType: TextInputType.number,
     );
   }
 }

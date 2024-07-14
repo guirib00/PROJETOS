@@ -11,115 +11,61 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Adicionar Registro Diário'),
+        title: Text(
+          'Adicionar Registro Diário',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 24,
+          ),
+        ),
+        backgroundColor: Colors.grey[900], // Cor de fundo da AppBar
+        elevation: 0, // Remove a sombra da AppBar
+        iconTheme: IconThemeData(color: Colors.white), // Cor da seta de voltar
       ),
+      backgroundColor: Colors.grey[900], // Cor de fundo do Scaffold
+
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                controller: PageControllers.dataController,
-                decoration: InputDecoration(labelText: 'Data (YYYY-MM-DD)'),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.levadosCarneController,
-                decoration: InputDecoration(labelText: 'Espetos de Carne Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.levadosLinguicaController,
-                decoration: InputDecoration(labelText: 'Espetos de Linguiça Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.levadosLinguicaApimentadaController,
-                decoration: InputDecoration(labelText: 'Espetos de Linguiça Apimentada Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.levadosFrangoController,
-                decoration: InputDecoration(labelText: 'Espetos de Frango Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.levadosPernilController,
-                decoration: InputDecoration(labelText: 'Espetos de Pernil Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.levadosCoracaoController,
-                decoration: InputDecoration(labelText: 'Espetos de Coração Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.levadosQueijoController,
-                decoration: InputDecoration(labelText: 'Espetos de Queijo Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.levadosPaoController,
-                decoration: InputDecoration(labelText: 'Espetos de Pão Levados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.sobrouCarneController,
-                decoration: InputDecoration(labelText: 'Espetos de Carne Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.sobrouLinguicaController,
-                decoration: InputDecoration(labelText: 'Espetos de Linguiça Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.sobrouLinguicaApimentadaController,
-                decoration: InputDecoration(labelText: 'Espetos de Linguiça Apimentada Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.sobrouFrangoController,
-                decoration: InputDecoration(labelText: 'Espetos de Frango Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.sobrouPernilController,
-                decoration: InputDecoration(labelText: 'Espetos de Pernil Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.sobrouCoracaoController,
-                decoration: InputDecoration(labelText: 'Espetos de Coração Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.sobrouQueijoController,
-                decoration: InputDecoration(labelText: 'Espetos de Queijo Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: PageControllers.sobrouPaoController,
-                decoration: InputDecoration(labelText: 'Espetos de Pão Sobrados'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 20),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: 16), // Espaço antes do primeiro TextField
+
+            // TextField para Data
+            _buildTextField('Data (YYYY-MM-DD)', PageControllers.dataController),
+
+            SizedBox(height: 16), // Espaço entre os TextFields
+
+            // Agrupamento de Espetos Levados
+            _buildEspetosGroup('Espetos Levados', [
+              _buildEspetoTextField('Carne Levados', PageControllers.levadosCarneController),
+              _buildEspetoTextField('Linguiça Levados', PageControllers.levadosLinguicaController),
+              _buildEspetoTextField('Linguiça Apimentada Levados', PageControllers.levadosLinguicaApimentadaController),
+              _buildEspetoTextField('Frango Levados', PageControllers.levadosFrangoController),
+              _buildEspetoTextField('Pernil Levados', PageControllers.levadosPernilController),
+              _buildEspetoTextField('Coração Levados', PageControllers.levadosCoracaoController),
+              _buildEspetoTextField('Queijo Levados', PageControllers.levadosQueijoController),
+              _buildEspetoTextField('Pão Levados', PageControllers.levadosPaoController),
+            ]),
+
+            SizedBox(height: 16), // Espaço entre os grupos de TextFields
+
+            // Agrupamento de Espetos Sobrados
+            _buildEspetosGroup('Espetos Sobrados', [
+              _buildEspetoTextField('Carne Sobrados', PageControllers.sobrouCarneController),
+              _buildEspetoTextField('Linguiça Sobrados', PageControllers.sobrouLinguicaController),
+              _buildEspetoTextField('Linguiça Apimentada Sobrados', PageControllers.sobrouLinguicaApimentadaController),
+              _buildEspetoTextField('Frango Sobrados', PageControllers.sobrouFrangoController),
+              _buildEspetoTextField('Pernil Sobrados', PageControllers.sobrouPernilController),
+              _buildEspetoTextField('Coração Sobrados', PageControllers.sobrouCoracaoController),
+              _buildEspetoTextField('Queijo Sobrados', PageControllers.sobrouQueijoController),
+              _buildEspetoTextField('Pão Sobrados', PageControllers.sobrouPaoController),
+            ]),
+
+            SizedBox(height: 20), // Espaço abaixo dos TextFields
+
+            // Botão de Salvar
             ElevatedButton(
               onPressed: () async {
                 final data = PageControllers.dataController.text;
@@ -148,39 +94,98 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildEspetosGroup(String title, List<Widget> children) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        ...children,
+      ],
+    );
+  }
+
+  Widget _buildEspetoTextField(String labelText, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          filled: true,
+          fillColor: Colors.grey[800], // Cor de fundo do TextField
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          // Estilizando o texto dentro do TextField
+          labelStyle: TextStyle(color: Colors.white),
+        ),
+        keyboardType: TextInputType.number,
+      ),
+    );
+  }
+
+  Widget _buildTextField(String labelText, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          filled: true,
+          fillColor: Colors.grey[800], // Cor de fundo do TextField
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          // Estilizando o texto dentro do TextField
+          labelStyle: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
 
   Future<void> _adicionarRegistro(String data, int levadosCarne, int levadosLinguica, int levadosLinguicaApimentada, int levadosFrango, int levadosPernil, int levadosCoracao, int levadosQueijo, int levadosPao, int sobrouCarne, int sobrouLinguica, int sobrouLinguicaApimentada, int sobrouFrango, int sobrouPernil, int sobrouCoracao, int sobrouQueijo, int sobrouPao ) async {
-     try {
+    try {
       await PageControllers.database.push().set({
-      'data': data,
-      'levados': {
-        'carne': levadosCarne,
-        'linguica': levadosLinguica,
-        'linguicaApimentada': levadosLinguicaApimentada,
-        'frango': levadosFrango,
-        'pernil': levadosPernil,
-        'coracao': levadosCoracao,
-        'queijo': levadosQueijo,
-        'pao': levadosPao,
-      },
-      'sobrou': {
-        'carne': sobrouCarne,
-        'linguica': sobrouLinguica,
-        'linguicaApimentada': sobrouLinguicaApimentada,
-        'frango': sobrouFrango,
-        'pernil': sobrouPernil,
-        'coracao': sobrouCoracao,
-        'queijo': sobrouQueijo,
-        'pao': sobrouPao,
-      },
-    });
-     print('Registro adicionado com sucesso!');
-     }catch (e) {
+        'data': data,
+        'levados': {
+          'carne': levadosCarne,
+          'linguica': levadosLinguica,
+          'linguicaApimentada': levadosLinguicaApimentada,
+          'frango': levadosFrango,
+          'pernil': levadosPernil,
+          'coracao': levadosCoracao,
+          'queijo': levadosQueijo,
+          'pao': levadosPao,
+        },
+        'sobrou': {
+          'carne': sobrouCarne,
+          'linguica': sobrouLinguica,
+          'linguicaApimentada': sobrouLinguicaApimentada,
+          'frango': sobrouFrango,
+          'pernil': sobrouPernil,
+          'coracao': sobrouCoracao,
+          'queijo': sobrouQueijo,
+          'pao': sobrouPao,
+        },
+      });
+      print('Registro adicionado com sucesso!');
+    } catch (e) {
       print('Erro ao adicionar registro: $e');
-    
-  }
+    }
   }
 }

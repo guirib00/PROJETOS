@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // Importa o pacote intl para formatação de data
 import 'controller/Controllers.dart';
 
 class AddRegistroPage extends StatefulWidget {
@@ -7,6 +8,14 @@ class AddRegistroPage extends StatefulWidget {
 }
 
 class _AddRegistroPageState extends State<AddRegistroPage> {
+  TextEditingController _dataController = TextEditingController(); // Controlador para o campo de data
+
+  @override
+  void initState() {
+    super.initState();
+    _dataController.text = _formatDate(DateTime.now()); // Define a data atual no controlador de texto ao abrir a página
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +42,7 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
             SizedBox(height: 16), // Espaço antes do primeiro TextField
 
             // TextField para Data
-            _buildTextField('Data (YYYY-MM-DD)', PageControllers.dataController),
+            _buildTextField('Data (YYYY-MM-DD)', _dataController),
 
             SizedBox(height: 16), // Espaço entre os TextFields
 
@@ -68,25 +77,43 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
             // Botão de Salvar
             ElevatedButton(
               onPressed: () async {
-                final data = PageControllers.dataController.text;
-                final levadosCarne = int.parse(PageControllers.levadosCarneController.text);
-                final levadosLinguica = int.parse(PageControllers.levadosLinguicaController.text);
-                final levadosLinguicaApimentada = int.parse(PageControllers.levadosLinguicaApimentadaController.text);
-                final levadosFrango = int.parse(PageControllers.levadosFrangoController.text);
-                final levadosPernil = int.parse(PageControllers.levadosPernilController.text);
-                final levadosCoracao = int.parse(PageControllers.levadosCoracaoController.text);
-                final levadosQueijo = int.parse(PageControllers.levadosQueijoController.text);
-                final levadosPao = int.parse(PageControllers.levadosPaoController.text);
-                final sobrouCarne = int.parse(PageControllers.sobrouCarneController.text);
-                final sobrouLinguica = int.parse(PageControllers.sobrouLinguicaController.text);
-                final sobrouLinguicaApimentada = int.parse(PageControllers.sobrouLinguicaApimentadaController.text);
-                final sobrouFrango = int.parse(PageControllers.sobrouFrangoController.text);
-                final sobrouPernil = int.parse(PageControllers.sobrouPernilController.text);
-                final sobrouCoracao = int.parse(PageControllers.sobrouCoracaoController.text);
-                final sobrouQueijo = int.parse(PageControllers.sobrouQueijoController.text);
-                final sobrouPao = int.parse(PageControllers.sobrouPaoController.text);
+                final data = _dataController.text;
+                final levadosCarne = _parseTextFieldToInt(PageControllers.levadosCarneController);
+                final levadosLinguica = _parseTextFieldToInt(PageControllers.levadosLinguicaController);
+                final levadosLinguicaApimentada = _parseTextFieldToInt(PageControllers.levadosLinguicaApimentadaController);
+                final levadosFrango = _parseTextFieldToInt(PageControllers.levadosFrangoController);
+                final levadosPernil = _parseTextFieldToInt(PageControllers.levadosPernilController);
+                final levadosCoracao = _parseTextFieldToInt(PageControllers.levadosCoracaoController);
+                final levadosQueijo = _parseTextFieldToInt(PageControllers.levadosQueijoController);
+                final levadosPao = _parseTextFieldToInt(PageControllers.levadosPaoController);
+                final sobrouCarne = _parseTextFieldToInt(PageControllers.sobrouCarneController);
+                final sobrouLinguica = _parseTextFieldToInt(PageControllers.sobrouLinguicaController);
+                final sobrouLinguicaApimentada = _parseTextFieldToInt(PageControllers.sobrouLinguicaApimentadaController);
+                final sobrouFrango = _parseTextFieldToInt(PageControllers.sobrouFrangoController);
+                final sobrouPernil = _parseTextFieldToInt(PageControllers.sobrouPernilController);
+                final sobrouCoracao = _parseTextFieldToInt(PageControllers.sobrouCoracaoController);
+                final sobrouQueijo = _parseTextFieldToInt(PageControllers.sobrouQueijoController);
+                final sobrouPao = _parseTextFieldToInt(PageControllers.sobrouPaoController);
 
-                await _adicionarRegistro(data, levadosCarne, levadosLinguica, levadosLinguicaApimentada, levadosFrango, levadosPernil, levadosCoracao, levadosQueijo, levadosPao, sobrouCarne, sobrouLinguica, sobrouLinguicaApimentada, sobrouFrango, sobrouPernil, sobrouCoracao, sobrouQueijo, sobrouPao);
+                await _adicionarRegistro(
+                  data,
+                  levadosCarne,
+                  levadosLinguica,
+                  levadosLinguicaApimentada,
+                  levadosFrango,
+                  levadosPernil,
+                  levadosCoracao,
+                  levadosQueijo,
+                  levadosPao,
+                  sobrouCarne,
+                  sobrouLinguica,
+                  sobrouLinguicaApimentada,
+                  sobrouFrango,
+                  sobrouPernil,
+                  sobrouCoracao,
+                  sobrouQueijo,
+                  sobrouPao,
+                );
                 Navigator.pop(context);
               },
               child: Text('Salvar'),
@@ -95,6 +122,23 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
         ),
       ),
     );
+  }
+
+  String _formatDate(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime); // Formata a data no formato desejado
+  }
+
+  int _parseTextFieldToInt(TextEditingController controller) {
+    final text = controller.text.trim();
+    if (text.isEmpty) {
+      return 0; // Valor padrão se o campo estiver vazio
+    }
+    try {
+      return int.parse(text);
+    } catch (e) {
+      print('Erro ao converter $text para inteiro: $e');
+      return 0; // Valor padrão se a conversão falhar
+    }
   }
 
   Widget _buildEspetosGroup(String title, List<Widget> children) {
@@ -133,6 +177,7 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
           // Estilizando o texto dentro do TextField
           labelStyle: TextStyle(color: Colors.white),
         ),
+        style: TextStyle(color: Colors.white),
         keyboardType: TextInputType.number,
       ),
     );
@@ -154,11 +199,30 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
           // Estilizando o texto dentro do TextField
           labelStyle: TextStyle(color: Colors.white),
         ),
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
 
-  Future<void> _adicionarRegistro(String data, int levadosCarne, int levadosLinguica, int levadosLinguicaApimentada, int levadosFrango, int levadosPernil, int levadosCoracao, int levadosQueijo, int levadosPao, int sobrouCarne, int sobrouLinguica, int sobrouLinguicaApimentada, int sobrouFrango, int sobrouPernil, int sobrouCoracao, int sobrouQueijo, int sobrouPao ) async {
+  Future<void> _adicionarRegistro(
+    String data,
+    int levadosCarne,
+    int levadosLinguica,
+    int levadosLinguicaApimentada,
+    int levadosFrango,
+    int levadosPernil,
+    int levadosCoracao,
+    int levadosQueijo,
+    int levadosPao,
+    int sobrouCarne,
+    int sobrouLinguica,
+    int sobrouLinguicaApimentada,
+    int sobrouFrango,
+    int sobrouPernil,
+    int sobrouCoracao,
+    int sobrouQueijo,
+    int sobrouPao,
+  ) async {
     try {
       await PageControllers.database.push().set({
         'data': data,

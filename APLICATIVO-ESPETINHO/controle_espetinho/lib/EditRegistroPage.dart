@@ -4,7 +4,7 @@ import 'controller/ControllerRegistroDiario.dart';
 import 'calculos/CalcularTotalArrecadado.dart';
 
 class EditRegistroPage extends StatefulWidget {
-  final RegistroDiario registroEdit; // Preços dos espetos
+  final RegistroDiario registroEdit; 
 
   EditRegistroPage({required this.registroEdit});
 
@@ -54,17 +54,17 @@ class _EditRegistroPageState extends State<EditRegistroPage> {
     _sobrouQueijoController.text = widget.registroEdit.sobrou['queijo'].toString();
     _sobrouPaoController.text = widget.registroEdit.sobrou['pao'].toString();
 
-    // Calcular o total arrecadado com base nos dados atuais do registro
+    
     double totalArrecadado = calcularTotalArrecadado(
       widget.registroEdit.levados,
       widget.registroEdit.sobrou,
     );
-    // Atualizar o controlador de texto do total arrecadado
+    
     _totalArrecadadoController.text = totalArrecadado.toString();
   }
 
   void _atualizarRegistro() {
-    // Capturar os novos valores dos TextControllers
+    
     final data = _dataController.text;
     final levadosCarne = int.tryParse(_levadosCarneController.text) ?? 0;
     final levadosLinguica = int.tryParse(_levadosLinguicaController.text) ?? 0;
@@ -84,7 +84,7 @@ class _EditRegistroPageState extends State<EditRegistroPage> {
     final sobrouPao = int.tryParse(_sobrouPaoController.text) ?? 0;
     final totalArrecadado = double.tryParse(_totalArrecadadoController.text) ?? 0.0;
 
-    // Atualizar os dados no objeto RegistroDiario
+    
     widget.registroEdit.data = data;
     widget.registroEdit.levados['carne'] = levadosCarne;
     widget.registroEdit.levados['linguica'] = levadosLinguica;
@@ -104,7 +104,7 @@ class _EditRegistroPageState extends State<EditRegistroPage> {
     widget.registroEdit.sobrou['pao'] = sobrouPao;
     widget.registroEdit.totalArrecadado = totalArrecadado;
 
-    // Atualizar os dados no Firebase
+    
     _database.child(widget.registroEdit.id).update({
       'data': data,
       'levados': {
@@ -130,7 +130,7 @@ class _EditRegistroPageState extends State<EditRegistroPage> {
       'totalArrecadado': totalArrecadado,
     });
 
-    // Fechar a página de edição
+    
     Navigator.pop(context);
   }
 
@@ -233,7 +233,7 @@ class _EditRegistroPageState extends State<EditRegistroPage> {
                 controller: _totalArrecadadoController,
                 decoration: InputDecoration(labelText: 'Total Arrecadado'),
                 keyboardType: TextInputType.number,
-                enabled: false, // Desabilitar edição diretamente no campo
+                enabled: false, 
               ),
               SizedBox(height: 20),
               ElevatedButton(

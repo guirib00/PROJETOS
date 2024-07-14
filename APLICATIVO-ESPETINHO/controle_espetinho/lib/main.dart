@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'addRegistroPage.dart'; // Verifique se o nome do arquivo está correto
+import 'addRegistroPage.dart';
 import 'DetalhesRegistroPage.dart';
 import 'controller/ControllerRegistroDiario.dart';
 import 'controller/ControllerPrecos.dart';
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
       ),
       drawer: Drawer(
         child: Container(
-          color: Colors.black, // Define a cor de fundo do Drawer como preto
+          color: Colors.black, 
           child: ListView(
             children: [
               DrawerHeader(
@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
                 ),
                 decoration: BoxDecoration(
-                    color: Colors.black), // Cor de fundo do cabeçalho
+                    color: Colors.black), 
               ),
               ListTile(
                 title: Text(
@@ -101,7 +101,7 @@ class HomePage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => DetalhesRegistroPage(
                           registro: registro,
-                          precos: precos), // Passe os preços aqui
+                          precos: precos), 
                     ),
                   );
                 },

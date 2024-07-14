@@ -180,7 +180,7 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
      print('Registro adicionado com sucesso!');
      }catch (e) {
       print('Erro ao adicionar registro: $e');
-    // tratamento de erro, se necessário
+    
   }
   }
 }

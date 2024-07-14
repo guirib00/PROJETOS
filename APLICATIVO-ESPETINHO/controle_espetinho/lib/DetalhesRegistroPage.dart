@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'EditRegistroPage.dart'; // Importe com alias
+import 'EditRegistroPage.dart'; 
 import 'controller/ControllerRegistroDiario.dart';
 
 class DetalhesRegistroPage extends StatelessWidget {
   final RegistroDiario registro;
-  final Map<String, double> precos; // Adicione esta linha
+  final Map<String, double> precos; 
 
-  DetalhesRegistroPage({required this.registro, required this.precos}); // Adicione precos ao construtor
+  DetalhesRegistroPage({required this.registro, required this.precos}); 
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class DetalhesRegistroPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EditRegistroPage(registroEdit: registro), // Passe os preços aqui
+                      EditRegistroPage(registroEdit: registro), 
                 ),
               );
             },

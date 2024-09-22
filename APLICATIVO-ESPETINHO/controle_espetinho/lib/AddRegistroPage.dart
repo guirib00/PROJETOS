@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Importa o pacote intl para formatação de data
-import 'controller/Controllers.dart';
+import '../controller/Controllers.dart';
+import '../controller/ControllerPrecos.dart'; // Importa o controlador de preços
+import 'Calculos/CalcularTotalArrecadado.dart';
 
 class AddRegistroPage extends StatefulWidget {
   @override
@@ -13,7 +15,28 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
   @override
   void initState() {
     super.initState();
+    _limparCampos(); // Limpar os campos ao iniciar a tela
+  }
+
+  void _limparCampos() {
+    // Limpar todos os controladores de texto
     _dataController.text = _formatDate(DateTime.now()); // Define a data atual no controlador de texto ao abrir a página
+    PageControllers.levadosCarneController.text = '';
+    PageControllers.levadosLinguicaController.text = '';
+    PageControllers.levadosLinguicaApimentadaController.text = '';
+    PageControllers.levadosFrangoController.text = '';
+    PageControllers.levadosPernilController.text = '';
+    PageControllers.levadosCoracaoController.text = '';
+    PageControllers.levadosQueijoController.text = '';
+    PageControllers.levadosPaoController.text = '';
+    PageControllers.sobrouCarneController.text = '';
+    PageControllers.sobrouLinguicaController.text = '';
+    PageControllers.sobrouLinguicaApimentadaController.text = '';
+    PageControllers.sobrouFrangoController.text = '';
+    PageControllers.sobrouPernilController.text = '';
+    PageControllers.sobrouCoracaoController.text = '';
+    PageControllers.sobrouQueijoController.text = '';
+    PageControllers.sobrouPaoController.text = '';
   }
 
   @override
@@ -77,42 +100,35 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
             // Botão de Salvar
             ElevatedButton(
               onPressed: () async {
-                final data = _dataController.text;
-                final levadosCarne = _parseTextFieldToInt(PageControllers.levadosCarneController);
-                final levadosLinguica = _parseTextFieldToInt(PageControllers.levadosLinguicaController);
-                final levadosLinguicaApimentada = _parseTextFieldToInt(PageControllers.levadosLinguicaApimentadaController);
-                final levadosFrango = _parseTextFieldToInt(PageControllers.levadosFrangoController);
-                final levadosPernil = _parseTextFieldToInt(PageControllers.levadosPernilController);
-                final levadosCoracao = _parseTextFieldToInt(PageControllers.levadosCoracaoController);
-                final levadosQueijo = _parseTextFieldToInt(PageControllers.levadosQueijoController);
-                final levadosPao = _parseTextFieldToInt(PageControllers.levadosPaoController);
-                final sobrouCarne = _parseTextFieldToInt(PageControllers.sobrouCarneController);
-                final sobrouLinguica = _parseTextFieldToInt(PageControllers.sobrouLinguicaController);
-                final sobrouLinguicaApimentada = _parseTextFieldToInt(PageControllers.sobrouLinguicaApimentadaController);
-                final sobrouFrango = _parseTextFieldToInt(PageControllers.sobrouFrangoController);
-                final sobrouPernil = _parseTextFieldToInt(PageControllers.sobrouPernilController);
-                final sobrouCoracao = _parseTextFieldToInt(PageControllers.sobrouCoracaoController);
-                final sobrouQueijo = _parseTextFieldToInt(PageControllers.sobrouQueijoController);
-                final sobrouPao = _parseTextFieldToInt(PageControllers.sobrouPaoController);
+                var data = _dataController.text;
+                var levados = {
+                  'carne': _parseTextFieldToInt(PageControllers.levadosCarneController),
+                  'linguica': _parseTextFieldToInt(PageControllers.levadosLinguicaController),
+                  'linguicaApimentada': _parseTextFieldToInt(PageControllers.levadosLinguicaApimentadaController),
+                  'frango': _parseTextFieldToInt(PageControllers.levadosFrangoController),
+                  'pernil': _parseTextFieldToInt(PageControllers.levadosPernilController),
+                  'coracao': _parseTextFieldToInt(PageControllers.levadosCoracaoController),
+                  'queijo': _parseTextFieldToInt(PageControllers.levadosQueijoController),
+                  'pao': _parseTextFieldToInt(PageControllers.levadosPaoController),
+                };
+                var sobrou = {
+                  'carne': _parseTextFieldToInt(PageControllers.sobrouCarneController),
+                  'linguica': _parseTextFieldToInt(PageControllers.sobrouLinguicaController),
+                  'linguicaApimentada': _parseTextFieldToInt(PageControllers.sobrouLinguicaApimentadaController),
+                  'frango': _parseTextFieldToInt(PageControllers.sobrouFrangoController),
+                  'pernil': _parseTextFieldToInt(PageControllers.sobrouPernilController),
+                  'coracao': _parseTextFieldToInt(PageControllers.sobrouCoracaoController),
+                  'queijo': _parseTextFieldToInt(PageControllers.sobrouQueijoController),
+                  'pao': _parseTextFieldToInt(PageControllers.sobrouPaoController),
+                };
+
+                var totalArrecadado = calcularTotalArrecadado(levados, sobrou);
 
                 await _adicionarRegistro(
                   data,
-                  levadosCarne,
-                  levadosLinguica,
-                  levadosLinguicaApimentada,
-                  levadosFrango,
-                  levadosPernil,
-                  levadosCoracao,
-                  levadosQueijo,
-                  levadosPao,
-                  sobrouCarne,
-                  sobrouLinguica,
-                  sobrouLinguicaApimentada,
-                  sobrouFrango,
-                  sobrouPernil,
-                  sobrouCoracao,
-                  sobrouQueijo,
-                  sobrouPao,
+                  levados,
+                  sobrou,
+                  totalArrecadado,
                 );
                 Navigator.pop(context);
               },
@@ -206,46 +222,16 @@ class _AddRegistroPageState extends State<AddRegistroPage> {
 
   Future<void> _adicionarRegistro(
     String data,
-    int levadosCarne,
-    int levadosLinguica,
-    int levadosLinguicaApimentada,
-    int levadosFrango,
-    int levadosPernil,
-    int levadosCoracao,
-    int levadosQueijo,
-    int levadosPao,
-    int sobrouCarne,
-    int sobrouLinguica,
-    int sobrouLinguicaApimentada,
-    int sobrouFrango,
-    int sobrouPernil,
-    int sobrouCoracao,
-    int sobrouQueijo,
-    int sobrouPao,
+    Map<String, int> levados,
+    Map<String, int> sobrou,
+    double totalArrecadado,
   ) async {
     try {
       await PageControllers.database.push().set({
         'data': data,
-        'levados': {
-          'carne': levadosCarne,
-          'linguica': levadosLinguica,
-          'linguicaApimentada': levadosLinguicaApimentada,
-          'frango': levadosFrango,
-          'pernil': levadosPernil,
-          'coracao': levadosCoracao,
-          'queijo': levadosQueijo,
-          'pao': levadosPao,
-        },
-        'sobrou': {
-          'carne': sobrouCarne,
-          'linguica': sobrouLinguica,
-          'linguicaApimentada': sobrouLinguicaApimentada,
-          'frango': sobrouFrango,
-          'pernil': sobrouPernil,
-          'coracao': sobrouCoracao,
-          'queijo': sobrouQueijo,
-          'pao': sobrouPao,
-        },
+        'levados': levados,
+        'sobrou': sobrou,
+        'totalArrecadado': totalArrecadado,
       });
       print('Registro adicionado com sucesso!');
     } catch (e) {

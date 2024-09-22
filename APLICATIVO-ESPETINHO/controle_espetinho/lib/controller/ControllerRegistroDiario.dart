@@ -3,8 +3,8 @@ import '../calculos/CalcularTotalArrecadado.dart';
 class RegistroDiario {
   final String id;
   String data;
-  final Map<String, int> levados;
-  final Map<String, int> sobrou;
+  Map<String, int> levados;
+  Map<String, int> sobrou;
   double totalArrecadado;
 
   RegistroDiario({
@@ -28,3 +28,4 @@ class RegistroDiario {
     );
   }
 }
+

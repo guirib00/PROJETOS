@@ -58,7 +58,8 @@ class _HomePageState extends State<HomePage> {
   void fetchYears() async {
     DatabaseEvent event = await _database.once();
     DataSnapshot snapshot = event.snapshot;
-    Map<dynamic, dynamic> registros = Map<dynamic, dynamic>.from(snapshot.value as Map<dynamic, dynamic>);
+    Map<dynamic, dynamic> registros =
+        Map<dynamic, dynamic>.from(snapshot.value as Map<dynamic, dynamic>);
     Set<String> yearSet = {};
 
     registros.forEach((key, value) {
@@ -76,6 +77,22 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       selectedYear = null;
       selectedMonth = null;
+    });
+  }
+
+  void _excluirRegistro(String registroId) {
+    _database.child(registroId).remove().then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Registro excluído com sucesso.'),
+        ),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao excluir registro: $error'),
+        ),
+      );
     });
   }
 
@@ -211,9 +228,9 @@ class _HomePageState extends State<HomePage> {
                 });
 
                 if (selectedYear != null || selectedMonth != null) {
-                  registrosList = registrosList.where((registro) {
-                    String year = registro.data.split('-')[0];
-                    String month = registro.data.split('-')[1];
+                  registrosList = registrosList.where((registros) {
+                    String year = registros.data.split('-')[0];
+                    String month = registros.data.split('-')[1];
                     bool matchesYear = selectedYear == null || year == selectedYear;
                     bool matchesMonth = selectedMonth == null || month == selectedMonth;
                     return matchesYear && matchesMonth;
@@ -239,6 +256,35 @@ class _HomePageState extends State<HomePage> {
                         subtitle: Text(
                           'Total Arrecadado: R\$ ${registro.totalArrecadado.toStringAsFixed(2)}',
                           style: TextStyle(color: Colors.white)),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Confirmar exclusão'),
+                                  content: Text('Tem certeza que deseja excluir este registro?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('Cancelar'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text('Confirmar'),
+                                      onPressed: () {
+                                        _excluirRegistro(registro.id); // Chamada para excluir o registro
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
                         onTap: () {
                           Navigator.push(
                             context,
